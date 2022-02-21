@@ -1,0 +1,25 @@
+Jobid: 54974
+qsub -I -n 1 -q gpu_mules -t 120
+Tue Sep 18 20:54:54 2018 +0000 (UTC) submitted with cwd set to: /home/salcedop/HPC/CUDA
+jobid 54974 submitted from terminal /dev/pts/46
+Tue Sep 18 20:55:23 2018 +0000 (UTC) 
+Tue Sep 18 20:55:23 2018 +0000 (UTC) Command: '/usr/bin/ssh' 'neddy' '/usr/libexec/cobalt/cobalt-launcher.py' '--nf' '/var/tmp/cobalt.54974' '--jobid' '54974' '--cwd' '/home/salcedop/HPC/CUDA' '--env' 'COBALT_JOBID=54974' '/bin/sleep' '7200'
+Tue Sep 18 20:55:23 2018 +0000 (UTC) 
+Tue Sep 18 20:55:23 2018 +0000 (UTC) Environment:
+Tue Sep 18 20:55:23 2018 +0000 (UTC) SHELL=/bin/bash
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_NODEFILE=/tmp/tmpHtd3hO
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_PARTNAME=neddy
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_JOBID=54974
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_STARTTIME=1537304104
+Tue Sep 18 20:55:23 2018 +0000 (UTC) LOGNAME=salcedop
+Tue Sep 18 20:55:23 2018 +0000 (UTC) USER=salcedop
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_ENDTIME=1537311304
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_PARTSIZE=1
+Tue Sep 18 20:55:23 2018 +0000 (UTC) HOME=/home/salcedop
+Tue Sep 18 20:55:23 2018 +0000 (UTC) COBALT_JOBSIZE=1
+Tue Sep 18 20:55:23 2018 +0000 (UTC) 
+Tue Sep 18 20:55:23 2018 +0000 (UTC) Info: stdin received from /dev/null
+Tue Sep 18 20:55:23 2018 +0000 (UTC) Info: stdout sent to /home/salcedop/HPC/CUDA/54974.output
+Tue Sep 18 20:55:23 2018 +0000 (UTC) Info: stderr sent to /home/salcedop/HPC/CUDA/54974.error
+Tue Sep 18 20:55:23 2018 +0000 (UTC) 
+Tue Sep 18 21:06:40 2018 +0000 (UTC) Info: user delete requested with signal SIGTERM by user salcedop
