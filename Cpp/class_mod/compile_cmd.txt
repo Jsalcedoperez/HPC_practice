@@ -1,0 +1,1 @@
+g++ main.cpp src_files/Core.cpp src_files/Grad.cpp src_files/Student_info.cpp -o myapp

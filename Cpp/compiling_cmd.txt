@@ -1,0 +1,1 @@
+g++ aux_files/computing_grades_reading.o aux_files/student_info.o -o prueba.exe

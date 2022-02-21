@@ -1,0 +1,6 @@
+Graduate,Jose,80,90,75,88,94,95
+UGraduate,Denzel,92,97,86,95,96
+UGraduate,Vladimir,99,91,92,91,99
+UGraduate,Carmelo,80,90,75,88,94
+Graduate,Baldomero,95,90,99,96,97,98
+Graduate,Freddie,81,84,87,93,95,98
