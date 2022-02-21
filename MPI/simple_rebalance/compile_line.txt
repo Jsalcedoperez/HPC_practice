@@ -1,0 +1,2 @@
+mpicxx -o reb.exe simple_rebalance.cc
+mpirun -np 4 ./reb.exe

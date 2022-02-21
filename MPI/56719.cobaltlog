@@ -1,0 +1,25 @@
+Jobid: 56719
+qsub -I -n 1 -q skylake_8180 -t 400
+Sat Oct 06 20:33:44 2018 +0000 (UTC) submitted with cwd set to: /home/salcedop/HPC/MPI
+jobid 56719 submitted from terminal /dev/pts/36
+Sat Oct 06 20:34:00 2018 +0000 (UTC) 
+Sat Oct 06 20:34:00 2018 +0000 (UTC) Command: '/usr/bin/ssh' 'skylake09' '/usr/libexec/cobalt/cobalt-launcher.py' '--nf' '/var/tmp/cobalt.56719' '--jobid' '56719' '--cwd' '/home/salcedop/HPC/MPI' '--env' 'COBALT_JOBID=56719' '/bin/sleep' '24000'
+Sat Oct 06 20:34:00 2018 +0000 (UTC) 
+Sat Oct 06 20:34:00 2018 +0000 (UTC) Environment:
+Sat Oct 06 20:34:00 2018 +0000 (UTC) SHELL=/bin/bash
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_NODEFILE=/tmp/tmpfStR0q
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_PARTNAME=skylake09
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_JOBID=56719
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_STARTTIME=1538858028
+Sat Oct 06 20:34:00 2018 +0000 (UTC) LOGNAME=salcedop
+Sat Oct 06 20:34:00 2018 +0000 (UTC) USER=salcedop
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_ENDTIME=1538882028
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_PARTSIZE=1
+Sat Oct 06 20:34:00 2018 +0000 (UTC) HOME=/home/salcedop
+Sat Oct 06 20:34:00 2018 +0000 (UTC) COBALT_JOBSIZE=1
+Sat Oct 06 20:34:00 2018 +0000 (UTC) 
+Sat Oct 06 20:34:00 2018 +0000 (UTC) Info: stdin received from /dev/null
+Sat Oct 06 20:34:00 2018 +0000 (UTC) Info: stdout sent to /home/salcedop/HPC/MPI/56719.output
+Sat Oct 06 20:34:00 2018 +0000 (UTC) Info: stderr sent to /home/salcedop/HPC/MPI/56719.error
+Sat Oct 06 20:34:00 2018 +0000 (UTC) 
+Sat Oct 06 22:15:16 2018 +0000 (UTC) Info: user delete requested with signal SIGTERM by user salcedop
