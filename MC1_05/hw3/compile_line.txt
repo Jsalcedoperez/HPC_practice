@@ -1,0 +1,3 @@
+g++ -o mc2.exe mean_squared_crow_COM.cc
+g++ -o mc2_pb.exe mean_squared_crow_COM_pb.cc Nuclide.cc
+./mc2.exe

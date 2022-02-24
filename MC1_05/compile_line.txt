@@ -1,0 +1,2 @@
+mpicxx -o mc1.exe mean_squared_crow.cc
+mpirun -np 4 ./mc1.exe
