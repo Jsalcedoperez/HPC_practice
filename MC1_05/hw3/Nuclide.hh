@@ -1,3 +1,5 @@
+#include "XS.hh"
+
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -41,15 +43,17 @@ public:
   
   Vec_Dbl d_macroXS;
  
-  void load_XS(); 
+  void load_XS();
+ 
 private:
   
   bool Edependency;
   std::string name;
   std::string filename;
   int A;
+  XS xs_object;
   double rho; // g/cm3
-  double microXS;
-  double macroXS;
+  //XS microXS;
+  //double macroXS;
   int total_size;
 };

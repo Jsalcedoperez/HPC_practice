@@ -13,7 +13,6 @@
 
 XS::XS(std::string& ss){ load_xs(ss);}
 
-
 void XS::load_data(std::string& filename)
 
 {

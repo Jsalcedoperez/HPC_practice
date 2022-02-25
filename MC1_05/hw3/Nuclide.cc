@@ -60,7 +60,7 @@ void Nuclide::read(std::stringstream& ss)
         {
            if ( this->Edependency) 
            {
-            this->filename = substr;
+            this->datadir = substr;
            }
            else {break;}
         }  
@@ -75,15 +75,44 @@ void Nuclide::read(std::stringstream& ss)
       }        
 }
 
+void Nuclide::init()
+
+{
+
+  std::unordered_map<std::string,XS> myxs;
+
+  //load nuclide's MTs)
+  
+  MTs = load_MTs("data.txt");
+  
+  //fill myxs
+  Vec_int::const_interator MTs_iter = MTs.begin(); 
+  
+
+  // read 
+
+
+  for (MTs_iter; MTs_iter != MTs.end() ; ++MTs_iter)
+
+  {
+    
+    myxs[*MTs_iter] = load_xs();
+
+  }
+
+}
+
 void Nuclide::load_XS()
 
 {
+    
+    XS::load_XS(this->datadir);
     std::fstream file;
     int column, row;
     std::string substr;
     if (this->Edependency)
     {
-      file.open(this->filename,std::ios::in); //open a file to perform read operation using file object
+      file.open(filename,std::ios::in); //open a file to perform read operation using file object
       if (file.is_open())
       { //checking whether the file is open
             std::string points;
