@@ -1,0 +1,130 @@
+In file included from mean_squared_crow_COM_pb.cc:12:
+In file included from ./Nuclide.hh:4:
+./XS.hh:10:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_Dbl = std::vector<double>;
+                ^
+In file included from mean_squared_crow_COM_pb.cc:12:
+./Nuclide.hh:12:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_Dbl = std::vector<double>;
+                ^
+./Nuclide.hh:13:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_str = std::vector<std::string>;
+                ^
+./Nuclide.hh:14:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_int = std::vector<int>;
+                ^
+./Nuclide.hh:15:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using XS_type = std::unordered_map<std::string,XS>;
+                ^
+./Nuclide.hh:16:23: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using XS_macro_type = std::unordered_map<std::string,Vec_Dbl>;
+                      ^
+mean_squared_crow_COM_pb.cc:15:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_Dbl = std::vector<double>;
+                ^
+mean_squared_crow_COM_pb.cc:43:71: error: expected ';' after top level declarator
+double interpolate_adv2(double Ex, Vec_Dbl& energy, Vec_Dbl& macro_XS)
+                                                                      ^
+                                                                      ;
+mean_squared_crow_COM_pb.cc:76:28: error: non-aggregate type 'std::vector<std::string>' (aka 'vector<basic_string<char, char_traits<char>, allocator<char> > >') cannot be initialized with an initializer list
+  std::vector<std::string> MT = {"total","elastic","fission","capture"};
+                           ^    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mean_squared_crow_COM_pb.cc:78:8: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+  for (auto& nuc : Nuclides)
+       ^
+mean_squared_crow_COM_pb.cc:78:18: warning: range-based for loop is a C++11 extension [-Wc++11-extensions]
+  for (auto& nuc : Nuclides)
+                 ^
+mean_squared_crow_COM_pb.cc:91:3: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+  auto iMT = MT[1] // elastic xs
+  ^
+mean_squared_crow_COM_pb.cc:93:3: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+  auto energy = nuc.get_energy(iMT);
+  ^
+mean_squared_crow_COM_pb.cc:108:43: error: use of undeclared identifier 'macro_scatXS'
+      macroXS = interpolate_adv2(E,energy,macro_scatXS);
+                                          ^
+mean_squared_crow_COM_pb.cc:200:5: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+    auto i = lower_bound_index(Xs_energy.begin(), Xs_energy.end(), Ex);
+    ^
+mean_squared_crow_COM_pb.cc:219:5: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+    auto i = lower_bound_index(energy.begin(), energy.end(), Ex);
+    ^
+13 warnings and 3 errors generated.
+In file included from Nuclide.cc:1:
+In file included from ./Nuclide.hh:4:
+./XS.hh:10:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_Dbl = std::vector<double>;
+                ^
+In file included from Nuclide.cc:1:
+./Nuclide.hh:12:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_Dbl = std::vector<double>;
+                ^
+./Nuclide.hh:13:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_str = std::vector<std::string>;
+                ^
+./Nuclide.hh:14:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_int = std::vector<int>;
+                ^
+./Nuclide.hh:15:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using XS_type = std::unordered_map<std::string,XS>;
+                ^
+./Nuclide.hh:16:23: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using XS_macro_type = std::unordered_map<std::string,Vec_Dbl>;
+                      ^
+Nuclide.cc:83:8: warning: expression result unused [-Wunused-value]
+  for (MTs_iter; MTs_iter != this->MTs.end(); ++MTs_iter)
+       ^~~~~~~~
+Nuclide.cc:111:1: warning: control reaches end of non-void function [-Wreturn-type]
+}
+^
+Nuclide.cc:178:5: warning: 'auto' type specifier is a C++11 extension [-Wc++11-extensions]
+    auto microxs =  this->microXS[*MT_iterator].get_microXS();
+    ^
+Nuclide.cc:186:38: error: no viable overloaded '='
+         this->macroXS[*MT_iterator] = this->rho * 6.022E23 * *(microXS_iter) * 1.E-24 / this->A;
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/vector:561:13: note: candidate function not viable: no known conversion from 'double' to 'const std::__1::vector<double, std::__1::allocator<double> >' for 1st argument
+    vector& operator=(const vector& __x);
+            ^
+Nuclide.cc:184:10: warning: expression result unused [-Wunused-value]
+    for (microXS_iter; microXS_iter != microXS_iter_end; ++microXS_iter)
+         ^~~~~~~~~~~~
+Nuclide.cc:176:8: warning: expression result unused [-Wunused-value]
+  for (MT_iterator; MT_iterator != this->MTs.end() ; ++MT_iterator)
+       ^~~~~~~~~~~
+In file included from Nuclide.cc:1:
+In file included from ./Nuclide.hh:4:
+In file included from ./XS.hh:4:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/fstream:184:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ostream:138:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/ios:216:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__locale:15:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/string:505:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/string_view:176:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__string:57:
+In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/algorithm:644:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/memory:1568:36: error: no matching constructor for initialization of 'XS'
+                ::new ((void*)__p) _Tp();
+                                   ^
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/unordered_map:1581:20: note: in instantiation of function template specialization 'std::__1::allocator_traits<std::__1::allocator<std::__1::__hash_node<std::__1::__hash_value_type<std::__1::basic_string<char>, XS>, void *> > >::construct<XS>' requested here
+    __node_traits::construct(__na, _VSTD::addressof(__h->__value_.__get_value().second));
+                   ^
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/unordered_map:1593:25: note: in instantiation of member function 'std::__1::unordered_map<std::__1::basic_string<char>, XS, std::__1::hash<std::__1::basic_string<char> >, std::__1::equal_to<std::__1::basic_string<char> >, std::__1::allocator<std::__1::pair<const std::__1::basic_string<char>, XS> > >::__construct_node_with_key' requested here
+    __node_holder __h = __construct_node_with_key(__k);
+                        ^
+Nuclide.cc:87:18: note: in instantiation of member function 'std::__1::unordered_map<std::__1::basic_string<char>, XS, std::__1::hash<std::__1::basic_string<char> >, std::__1::equal_to<std::__1::basic_string<char> >, std::__1::allocator<std::__1::pair<const std::__1::basic_string<char>, XS> > >::operator[]' requested here
+    this->microXS[*MTs_iter] = this->load_XS(xs_file);
+                 ^
+./XS.hh:18:3: note: candidate constructor not viable: requires single argument 'filename', but no arguments were provided
+  XS(std::string& filename);
+  ^
+./XS.hh:12:7: note: candidate constructor (the implicit copy constructor) not viable: requires 1 argument, but 0 were provided
+class XS
+      ^
+11 warnings and 2 errors generated.
+In file included from XS.cc:1:
+./XS.hh:10:17: warning: alias declarations are a C++11 extension [-Wc++11-extensions]
+using Vec_Dbl = std::vector<double>;
+                ^
+1 warning generated.

@@ -17,53 +17,39 @@ void Nuclide::read(std::stringstream& ss)
 {
       int count = -1;
       std::string substr;
-      while (ss.good())                      
-      { 
+      while (ss.good())
+      {
         ++count;
         substr = "";
         getline(ss,substr,',');
-      
+
         std::cout << "count " << count << " and substr " << substr << std::endl;
-        
+
         if (count == 0)
         {
            this->name = substr;
         }
-        
+
         else if (count == 1)
         {
            this->A = std::stod(substr);
         }
-        
+
         else if (count == 2)
         {
            this->rho = std::stod(substr);
         }
-        
+
         else if (count == 3)
         {
-           this->microXS = std::stod(substr);
+           this->xs_org = std::stod(substr);
         }
-        
+
         else if (count == 4)
         {
-           std::string Edependency_str = substr;
-           if (Edependency_str == "True")
-            {
-              this->Edependency = true;
-
-            }
-            else{ this->Edependency = false;}
+           this->datadir = substr;
         }
-        
-        else if (count == 5)
-        {
-           if ( this->Edependency) 
-           {
-            this->datadir = substr;
-           }
-           else {break;}
-        }  
+
 
         else
 
@@ -72,79 +58,69 @@ void Nuclide::read(std::stringstream& ss)
             throw std::runtime_error("Not the right number of inputs. For each nuclide, the input has to include the following information:  name, atomic number, density, micro cross-section.");
         }
 
-      }        
+      }
 }
 
 void Nuclide::init()
 
 {
 
-  std::unordered_map<std::string,XS> myxs;
+  //https://stackoverflow.com/questions/10093891/opening-a-file-in-c-outside-of-the-working-directory
 
-  //load nuclide's MTs)
-  
-  MTs = load_MTs("data.txt");
-  
+  std::string f_MT = this->datadir + "/" + this->get_name() + "_MTs.txt";
+
+  //std::ifstream input(f);
+  //load nuclide's MTs
+
+  load_MTs(f_MT);
+
   //fill myxs
-  Vec_int::const_interator MTs_iter = MTs.begin(); 
-  
+  Vec_int::const_iterator MTs_iter;
 
-  // read 
+  // read cross-section
 
-
-  for (MTs_iter; MTs_iter != MTs.end() ; ++MTs_iter)
+  for (MTs_iter = this->MTs.begin(); MTs_iter != this->MTs.end(); ++MTs_iter)
 
   {
-    
-    myxs[*MTs_iter] = load_xs();
-
+    std::string xs_file = this->datadir + "/" + this->get_name() + "_"+ std::to_string(*MTs_iter) + ".txt";
+    this->load_XS(xs_file);
   }
 
 }
 
-void Nuclide::load_XS()
+void Nuclide::load_MTs(std::string filename)
 
 {
-    
-    XS::load_XS(this->datadir);
+
     std::fstream file;
-    int column, row;
-    std::string substr;
-    if (this->Edependency)
-    {
-      file.open(filename,std::ios::in); //open a file to perform read operation using file object
-      if (file.is_open())
+    file.open(filename, std::ios::in); //open a file to perform read operation using file object
+
+    if (file.is_open())
       { //checking whether the file is open
-            std::string points;
-            //this->d_microXS = 0;
-            //this->d_microXS = new double*[MAX_L];
-            std::cout << " READING XS FILE DATA:: " << this->filename << std::endl;
-            while(getline(file, points))
+            std::string MT;
+            std::cout << " READING MT FILE DATA:: " << std::endl;
+            int counter = -1;
+            while(getline(file, MT))
             { //read data from file object and put it into string.
               // Returns first token
-              std::stringstream s_stream(points);
-              row++;
-              column = -1;
-              while (s_stream.good())
-              {
-                  substr = "";
-                  getline(s_stream,substr,',');
-                  column++;
-                  if (column % 2 == 0)
-                  {
-                    //std::cout << "( " << column << ", " << std::stod(substr) << ")" << std::endl; 
-                    Xs_energy.push_back(std::stod(substr));
-                  
-                  }
-                  else
+              //std::stringstream s_stream(MTs);
 
-                  {
-                    d_microXS.push_back(std::stod(substr));
-                  } 
-              }
+              this->MTs.push_back(std::stoi(MT));
+              counter += 1;
+              this->rx_map.push_back(counter);
             }
       }
-    } 
+
+}
+
+
+void Nuclide::load_XS(std::string xs_file)
+
+{
+    // NEED to make sure i am writing this correctly.
+
+    XS_uptrs xs = std::make_shared<XS>(xs_file);
+    this->XS_.push_back(xs);
 }
 
 std::string Nuclide::get_name() const
@@ -163,7 +139,7 @@ int Nuclide::get_A() const
 
 }
 
-  
+
 double Nuclide::get_rho() const
 
 {
@@ -172,60 +148,47 @@ double Nuclide::get_rho() const
 
 }
 
-double Nuclide::get_microXS() const
+Vec_Dbl Nuclide::get_microXS(int MT)
 
 {
-
-  return this->microXS;
+  int indx_ = this->MTs[MT];
+  return this->XS_[indx_]->get_microXS();
 
 }
 
-double Nuclide::get_macroXS() const
+
+Vec_Dbl Nuclide::get_energy(int MT)
 
 {
+  int indx_ = this->MTs[MT];
+  return this->XS_[indx_]->get_energy();
+
+}
+
+
+Vec_Dbl Nuclide::compute_macroXS(int MT)
+
+{
+
+
+    int indx_ = this->MTs[MT];
+    auto microxs = this->XS_[indx_]->get_microXS();
+    //auto microxs =  this->microXS[MT].get_microXS();
+
+    Vec_Dbl::const_iterator microXS_iter;
+
+    Vec_Dbl::const_iterator microXS_iter_end = microxs.end();
+
+    for (microXS_iter = microxs.begin() ; microXS_iter != microXS_iter_end; ++microXS_iter)
+    {
+
+         auto macro_xs = this->rho * 6.022E23 * *(microXS_iter) * 1.E-24 / this->A;
+         this->macroXS.push_back(macro_xs);
+        //std::cout << "... " << i_macroXS << std::endl;
+
+    }
 
   return this->macroXS;
-
-}
-
-Vec_Dbl Nuclide::get_Xs_energy() const
-
-{
-
-  return this->Xs_energy;
-
-}
-
-bool Nuclide::get_Edependency() const
-
-
-{
-
-  return this->Edependency;
-
-
-}
-
-
-double Nuclide::compute_macroXS() 
-
-{
-
-  return this->macroXS = this->rho * 6.022E23 * this->microXS * 1.E-24 / this->A;
-
-}
-
-Vec_Dbl Nuclide::d_compute_macroXS() 
-
-{
-  Vec_Dbl::const_iterator microXS_iter = this->d_microXS.begin();
-  for (microXS_iter; microXS_iter != this->d_microXS.end() ; ++microXS_iter)
-  {
-    auto i_macroXS = this->rho * 6.022E23 * *(microXS_iter) * 1.E-24 / this->A;
-    //std::cout << "... " << i_macroXS << std::endl;
-    this->d_macroXS.push_back(i_macroXS);
-  }
-  return this->d_macroXS; 
 }
 
 

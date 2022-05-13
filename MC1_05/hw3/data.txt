@@ -1,2 +1,1 @@
-H1,1,0.7,20,True,H1.txt
-C12,12,2.27,5,False,C12.txt
+H1,1,0.7,20,/Users/2l6/HPC_practice/MC1_05/hw3/datadir

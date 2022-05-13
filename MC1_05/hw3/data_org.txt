@@ -1,0 +1,2 @@
+H1,1,0.7,20,True,/Users/2l6/HPC_practice/MC1_05/hw3/datadir
+C12,12,2.27,5,False

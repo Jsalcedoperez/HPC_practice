@@ -1,3 +1,6 @@
+#ifndef XS_class_hh
+#define XS_class_hh
+
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -11,29 +14,23 @@ class XS
 
 public:
 
-  
+
   XS(std::string& filename);
 
-  ~Nuclide() {};
+  ~XS() {};
 
-  void load_xs(std::string& filename);
+  void load_data(std::string& filename);
 
-  double get_microXS() const;
-  
-  double compute_macroXS();
-  
-  Vec_Dbl d_compute_macroXS();
+  Vec_Dbl get_microXS();
 
-  double get_macroXS() const;
+  Vec_Dbl get_energy();
 
-  Vec_Dbl get_energy() const;
 
- 
 private:
   Vec_Dbl energy;
 
   Vec_Dbl microXS;
-  
-  Vec_Dbl macroXS;
-  Vec_Dbl microXS;  
+
 };
+
+#endif
