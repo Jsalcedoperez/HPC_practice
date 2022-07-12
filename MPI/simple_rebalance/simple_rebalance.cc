@@ -12,7 +12,7 @@ namespace defi{
     std::vector<int> target(5), min_work(4);
     int total_sites, remainder, min_target;
     std::vector<MPI_Request> requests;
-    
+
     enum Neighbor {
         LEFT  = 0,
         RIGHT = 1,
@@ -41,9 +41,9 @@ int main(int argc, char *argv[])
     std::vector<int> fission_sites = {0, 5, 10, 18, 25};
 
     setup(fission_sites);
- 
+
     create_sites();
-    
+
     int tot_converged, converge = 0;
     int m = 3;
     if (myrank == m)
@@ -51,14 +51,14 @@ int main(int argc, char *argv[])
     {
 
     std::cout << "(before) from node "<< myrank <<", this is my (a,b) pair (" << a << ", " << b << ")" << std::endl;
-    
+
     for (int i = 0; i < local_sites.size() ; ++i)
     {
 
     std::cout << "(before), from node "<<myrank << ", ls[" << i << "] = " << local_sites[i] << std::endl;
 
     }
-  
+
 
     }
     while (tot_converged < tot_ranks)
@@ -72,16 +72,16 @@ int main(int argc, char *argv[])
         {
 
         std::cout << "(after) from node "<< myrank <<", this is my (a,b) pair (" << a << ", " << b << ")" << std::endl;
-        
+
         for (int i = 0; i < local_sites.size() ; ++i)
         {
-    
+
         std::cout << "(after), from node "<<myrank << ", ls[" << i << "] = " << local_sites[i] \
         << " and fsc " << fsc_size << std::endl;
         //std::cout << "(after), converge "<< tot_converged << std::endl;
 
         }
-      
+
 
         }
         if (fsc_size == min_work[myrank] )
@@ -141,18 +141,18 @@ void create_sites()
         }
     }
 
-    
+
     sites_per_rank[myrank] = b-a+1;
     MPI_Allreduce(MPI_IN_PLACE, sites_per_rank.data(), sites_per_rank.size(), MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-   
+
     if (sites_per_rank[myrank] != local_sites.size())
     {
-       
+
         std::cout << "sites' size and fsc_size don't match" << std::endl;
 
-    }  
+    }
 
-   
+
 }
 void rebalance(const std::vector<int>& fission_sites)
 
@@ -178,8 +178,8 @@ void rebalance(const std::vector<int>& fission_sites)
     else if (b < (target[myrank + 1]-1))
     {
         if (myrank != (tot_ranks-1)){
-  
-      
+
+
         n = std::min((target[myrank+1]-1-b),sites_per_rank[myrank+1]);
         neighbor = myrank + 1;
         org_size = local_sites.size();
@@ -199,7 +199,7 @@ void rebalance(const std::vector<int>& fission_sites)
         n = std::min((a-target[myrank]), sites_per_rank[myrank-1]);
         org_size = local_sites.size();
         neighbor = myrank - 1;
-        
+
         local_sites.resize(org_size+n);
         requests.emplace_back();
         MPI_Irecv(&local_sites[org_size], n, MPI_INT, neighbor, neighbor, MPI_COMM_WORLD, &requests.back());
