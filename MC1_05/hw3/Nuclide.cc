@@ -183,8 +183,8 @@ Vec_Dbl Nuclide::compute_macroXS(int MT)
     {
 
          auto macro_xs = this->rho * 6.022E23 * *(microXS_iter) * 1.E-24 / this->A;
+
          this->macroXS.push_back(macro_xs);
-        //std::cout << "... " << i_macroXS << std::endl;
 
     }
 

@@ -38,9 +38,8 @@ typename std::iterator_traits<It>::difference_type lower_bound_index(
   It first, It last, const T& value);
 
 
-double interpolate_adv(double Ex, std::vector<double>& Xs_energy ,std::vector<double>& Xs_macros);
 
-double interpolate_adv2(double Ex, Vec_Dbl& energy, Vec_Dbl& macro_XS);
+double interpolate_adv(double Ex, Vec_Dbl& energy, Vec_Dbl& macro_XS);
 
 float rn(unsigned long *);
 
@@ -105,7 +104,7 @@ int main()
       // compare the length of the flight's projections
       // on three axes
 
-      macroXS = interpolate_adv2(E,energy,macro_scatXS);
+      macroXS = interpolate_adv(E,energy,macro_scatXS);
 
       double dist = -log(rn(&seed)) / macroXS;
       dis_x = dist * cosx;
@@ -188,33 +187,11 @@ double interpolate(double Ex, std::vector<double>& Xs_energy ,std::vector<double
 
 }
 
-double interpolate_adv(double Ex, std::vector<double>& Xs_energy, std::vector<double>& Xs_macros)
+
+double interpolate_adv(double Ex, Vec_Dbl& energy, Vec_Dbl& XS_macro)
 {
 
   double xs = 0.0;
-
-  if (Ex >= Xs_macros.front())
-
-  {
-
-    auto i = lower_bound_index(Xs_energy.begin(), Xs_energy.end(), Ex);
-    if (i > 0)
-    {
-    xs = (Xs_macros[i] - Xs_macros[i-1]) * (Ex -Xs_energy[i-1]) / ( Xs_energy[i] - Xs_energy[i-1])  + Xs_macros[i-1];
-    }
-
-  }
-  return xs;
-}
-
-double interpolate_adv2(double Ex, Vec_Dbl& energy, Vec_Dbl& XS_macro)
-{
-
-  double xs = 0.0;
-   std::cout << "e0 " << energy[0] << std::endl;
-   std::cout << "xs0 " << XS_macro[0] << std::endl;
-   std::cout << "e59 " << energy[59] << std::endl;
-   std::cout << "xs59 " << XS_macro[59] << std::endl;
   if (Ex >= energy.front())
 
   {
@@ -238,7 +215,7 @@ typename std::iterator_traits<It>::difference_type lower_bound_index(
 {
   if (*first == value)
     return 0;
-  return std::lower_bound(first, last, value) - first - 1;
+  return std::lower_bound(first, last, value) - first ;
 }
 
 // Park & Miller LCG from
