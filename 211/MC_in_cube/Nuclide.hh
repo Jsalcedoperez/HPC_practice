@@ -48,12 +48,13 @@ public:
 
   XS_vec XS_;
 
-  Vec_int rx_map = Vec_int(102,0);
+  Vec_int rx_list;
+
 
 private:
 
   std::string name;
-  Vec_int MTs;
+  Vec_int MTs = Vec_int(102,0);
   std::string datadir;
   std::string xs_name;
   int A;

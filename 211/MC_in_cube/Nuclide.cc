@@ -79,10 +79,11 @@ void Nuclide::init()
 
   // read cross-section
 
-  for (MTs_iter = this->MTs.begin(); MTs_iter != this->MTs.end(); ++MTs_iter)
+  for (MTs_iter = this->rx_list.begin(); MTs_iter != this->rx_list.end(); ++MTs_iter)
 
   {
     std::string xs_file = this->datadir + "/" + this->get_name() + "_"+ std::to_string(*MTs_iter) + ".txt";
+    std::cout << "xs_file" << xs_file << std::endl;
     this->load_XS(xs_file);
   }
 
@@ -104,10 +105,11 @@ void Nuclide::load_MTs(std::string filename)
             { //read data from file object and put it into string.
               // Returns first token
               //std::stringstream s_stream(MTs);
-
-              this->MTs.push_back(std::stoi(MT));
+              std::cout << "MT desde load_mts " << MT << std::endl;
               counter += 1;
-              this->rx_map.push_back(counter);
+              this->MTs[std::stoi(MT)] = counter;
+              std::cout << "this mts "<< this->MTs[std::stoi(MT)] << std::endl;
+              this->rx_list.push_back(std::stoi(MT));
             }
       }
 
@@ -151,7 +153,10 @@ double Nuclide::get_rho() const
 Vec_Dbl Nuclide::get_microXS(int MT)
 
 {
+
+  std::cout << "MT " << MT << std::endl;
   int indx_ = this->MTs[MT];
+  std::cout << "indx " << indx_ << std::endl;
   return this->XS_[indx_]->get_microXS();
 
 }

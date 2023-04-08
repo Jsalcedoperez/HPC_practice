@@ -35,6 +35,7 @@ void XS::load_data(std::string& filename)
                 substr = "";
                 getline(s_stream,substr,',');
                 column++;
+                std::cout << "substr " << substr << std::endl;
                 if (column % 2 == 0)
                 {
                   //std::cout << "( " << column << ", " << std::stod(substr) << ")" << std::endl;
