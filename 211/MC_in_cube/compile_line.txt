@@ -1,2 +1,4 @@
 g++ -std=c++11 -o cube.exe cube.cc Nuclide.cc XS.cc
+g++ -std=c++11 -o cube_c12.exe cube_C12.cc Nuclide.cc XS.cc
+g++ -std=c++11 -o cube_redo.exe cube_redo.cc Nuclide.cc XS.cc
 ./cube.exe
