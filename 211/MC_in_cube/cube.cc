@@ -24,7 +24,7 @@ namespace definitions
 {
   using reverse_it = std::vector<double>::reverse_iterator;
   int A,nScat;
-  int nNeutrons = 120000;
+  int nNeutrons = 20000;
   int e_bin;
   double rs, sum_rs, mean_rs;
 
@@ -51,8 +51,8 @@ namespace definitions
   double count_leakage=0.0;
   double count_abs=0.0;
   int nuclide_id;
-  bool anisotropic_scattering = true;
-  bool one_over_v = true;
+  bool anisotropic_scattering = false;
+  bool one_over_v = false;
   bool interpolate_xs = false;
   double dist_collision_total=0.0;
 
@@ -233,7 +233,7 @@ int main(int argc, char** argv)
    }
 
   // Intialize Seed
-  unsigned long seed = 1337;
+  unsigned long seed = 4305834;
 
   unsigned long rxn_seed = 7777 * time(NULL);
 
@@ -298,7 +298,7 @@ int main(int argc, char** argv)
         }
         else
         {
-                    sigt=tot_scat+tot_abs;
+                    sigt=tot_abs + tot_scat;
         }
       }
       else
@@ -334,7 +334,7 @@ int main(int argc, char** argv)
 
       //coords = {x_new,y_new,z_new};
       coords = {x_new, y_new, z_new};
-
+`
       //std::cout << "neutron " << n << " with old coords (" << x << "," << y << "," <<z<< ")" << std::endl;
 
       //std::cout << "neutron " << n << " with coords (" << x_new << "," << y_new << "," <<z_new<< ")" << std::endl;
@@ -355,6 +355,7 @@ int main(int argc, char** argv)
             else {plane_index = i+2;}
 
              bool leak = distance(origin, coords,planes[plane_index]);
+             flag = 2;
 
              if (leak)
              {
@@ -421,11 +422,25 @@ int main(int argc, char** argv)
 
 
 
-                    if (E < 1.0)
+                    if (E < 1.)
                     {
                         // use both oxygen and hydrogen in rxn computation
                     nuclide = 2.0 ;
                     }
+
+                }
+
+                else
+
+
+                {
+
+                    //nuclide = 10.0/11.0;
+
+
+                    nuclide = (Sig_Abs[0] + Sig_Scat[0]) /sigt;
+                    std::cout << "no over/v nuclide " << nuclide << std::endl;
+
 
                 }
                 if (nuclide < nuclide_type)
@@ -458,11 +473,26 @@ int main(int argc, char** argv)
             if (nuclide == 2.0)
             {
 
-                auto den = 4*Sig_Scat[0] + Sig_Scat[1] + std::sqrt(0.0253/E) * tot_abs;
 
-                //rxn_th = tot_scat/ den;
+                auto den = Sig_Scat[0] + Sig_Scat[1] + std::sqrt(0.0253/E) * tot_abs;
+
+                rxn_th = tot_scat / den;
+
+                //rxn_th = ( Sig_Scat[0] + Sig_Scat[1]) / den;
+
+
+                if (interpolate_xs)
+
+                {
+
+                den = 4*Sig_Scat[0] + Sig_Scat[1] + std::sqrt(0.0253/E) * tot_abs;
+
 
                 rxn_th = ( 4*Sig_Scat[0] + Sig_Scat[1]) / den;
+
+                }
+
+
                 std::cout << "tot_scat " << tot_scat << std::endl;
                 std::cout << "den " << den << std::endl;
             }
@@ -577,7 +607,7 @@ int main(int argc, char** argv)
                     A=18;
                }
                 */
-
+               //A=18;
                std::cout << "A " << A << std::endl;
                std::cout << "E1 " << E << std::endl;
                std::cout << "eta " << eta << std::endl;
@@ -596,6 +626,7 @@ int main(int argc, char** argv)
        {
             flag=5;
             total_scattering+=counter_scattering;
+            //E_abs += E;
             //total_scattering_pre+=counter_scattering;
 
        }
@@ -649,7 +680,7 @@ double  mean_col_before_abs = total_scattering /count_abs;
 E_mean_abs = E_abs / count_abs;
 E_mean_leak = E_leak / count_leakage;
 auto f_abs_auto = count_abs / nNeutrons;
-auto f_leak_auto = 1-f_abs;
+auto f_leak_auto = 1-f_abs_auto;
 mean_dist_leak = dist_leakage_total/count_leakage;
 mean_dist_abs = dist_absorption_total/count_abs;
 mean_scatt = total_scattering/count_neutron_scatt;
